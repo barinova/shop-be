@@ -1,4 +1,3 @@
-import { formatJSONResponse } from '@libs/api-gateway';
 import { PRODUCTS } from "../../mocks/products";
 import {middyfy} from "@libs/lambda";
 import {APIGatewayProxyEvent, APIGatewayProxyResult} from "aws-lambda";
@@ -15,9 +14,14 @@ export const getProductById = middyfy(async (event: APIGatewayProxyEvent): Promi
       throw `${NOT_FOUND} ${id}`;
     }
 
-    return formatJSONResponse({
-      product, id
-    });
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true
+      },
+      body: JSON.stringify(product),
+    }
   } catch (e) {
     const isNotFound: boolean = e.includes(NOT_FOUND);
     return {
