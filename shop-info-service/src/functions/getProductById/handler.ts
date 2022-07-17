@@ -1,6 +1,7 @@
 import { PRODUCTS } from "../../mocks/products";
-import {middyfy} from "@libs/lambda";
-import {APIGatewayProxyEvent, APIGatewayProxyResult} from "aws-lambda";
+import { middyfy} from "@libs/lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { emitConnectionDelay } from "../../mocks/delayFunc";
 
 const NOT_FOUND: string = 'Not Found Product With Id';
 
@@ -8,6 +9,7 @@ export const getProductById = middyfy(async (event: APIGatewayProxyEvent): Promi
   const id = event.queryStringParameters.id;
 
   try {
+    await emitConnectionDelay(500);
     const product = PRODUCTS.find(x => x.id === id);
 
     if (!product) {

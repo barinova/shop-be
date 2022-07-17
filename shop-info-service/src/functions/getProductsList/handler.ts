@@ -1,9 +1,11 @@
 import { PRODUCTS } from "../../mocks/products";
 import {middyfy} from "@libs/lambda";
 import {APIGatewayProxyResult} from "aws-lambda";
+import {emitConnectionDelay} from "../../mocks/delayFunc";
 
 export const getProductsList = middyfy(async (): Promise<APIGatewayProxyResult> => {
   try {
+    await emitConnectionDelay(500);
     return {
       statusCode: 200,
       headers: {
