@@ -5,7 +5,7 @@ import { emitConnectionDelay } from "../../mocks/delayFunc";
 const NOT_FOUND: string = 'Not Found Product With Id';
 
 export const getProductById = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const id = event.queryStringParameters.id;
+  const id = event.queryStringParameters?.id;
 
   try {
     await emitConnectionDelay(500);

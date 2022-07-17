@@ -1,6 +1,6 @@
 import { PRODUCTS } from "../../mocks/products";
-import {APIGatewayProxyResult} from "aws-lambda";
-import {emitConnectionDelay} from "../../mocks/delayFunc";
+import { APIGatewayProxyResult } from "aws-lambda";
+import { emitConnectionDelay } from "../../mocks/delayFunc";
 
 export const getProductsList = async (): Promise<APIGatewayProxyResult> => {
   try {
