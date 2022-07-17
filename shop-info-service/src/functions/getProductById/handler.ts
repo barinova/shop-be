@@ -1,11 +1,10 @@
 import { PRODUCTS } from "../../mocks/products";
-import { middyfy} from "@libs/lambda";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { emitConnectionDelay } from "../../mocks/delayFunc";
 
 const NOT_FOUND: string = 'Not Found Product With Id';
 
-export const getProductById = middyfy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const getProductById = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const id = event.queryStringParameters.id;
 
   try {
@@ -31,4 +30,4 @@ export const getProductById = middyfy(async (event: APIGatewayProxyEvent): Promi
       body: e
     };
   }
-});
+};
