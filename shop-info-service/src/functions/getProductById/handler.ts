@@ -5,7 +5,7 @@ import { emitConnectionDelay } from "../../mocks/delayFunc";
 const NOT_FOUND: string = 'Not Found Product With Id';
 
 export const getProductById = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const id = event.queryStringParameters?.id;
+  const id = event.pathParameters?.id;
 
   try {
     await emitConnectionDelay(500);
@@ -27,7 +27,9 @@ export const getProductById = async (event: APIGatewayProxyEvent): Promise<APIGa
     const isNotFound: boolean = e.includes(NOT_FOUND);
     return {
       statusCode: isNotFound ? 404 : 500,
-      body: e
+      body: JSON.stringify({
+        message: e
+      })
     };
   }
 };

@@ -6,7 +6,7 @@ export const getProductsList = {
     {
       http: {
         method: 'get',
-        path: 'get-products-list',
+        path: 'products',
         cors: true
       },
     },
