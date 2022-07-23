@@ -4,7 +4,10 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "productById": "serverless invoke local --function getProductById --data {\"pathParameters\": {\"id\": \"7567ec4b-b10c-48c5-9445-fc73c48a80a2\"}}",
+    "productsList": "serverless invoke local --function getProductsList",
+    "addProduct": "serverless invoke local -f addProduct --path src/functions/addProduct/mock.json"
   },
   "engines": {
     "node": ">=14.15.0"
@@ -12,6 +15,8 @@
   "dependencies": {
     "@middy/core": "^2.5.3",
     "@middy/http-json-body-parser": "^2.5.3",
+    "pg": "^8.7.3",
+    "pg-native": "^3.0.0",
     "serverless-auto-swagger": "^2.8.2"
   },
   "devDependencies": {
