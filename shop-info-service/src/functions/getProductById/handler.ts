@@ -16,7 +16,8 @@ export const getProductById = async (event: APIGatewayProxyEvent): Promise<APIGa
 
   try {
     await client.connect();
-    const product: Product = await client.query(queryGetProductById, [id]);
+    const product: Product = (await client.query(queryGetProductById, [id]))?.rows?.[0];
+    console.log(product);
 
     if (!product) {
       throw `${NOT_FOUND} ${id}`;
