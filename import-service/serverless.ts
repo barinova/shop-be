@@ -1,5 +1,6 @@
 import type { AWS } from '@serverless/typescript';
-import {importProductsFile} from '@functions/getProductsList';
+import {importProductsFile} from '@functions/importFile';
+import {importFileParser} from '@functions/importFileParser';
 
 const serverlessConfiguration: AWS = {
   service: 'import-service',
@@ -33,7 +34,7 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
   },
-  functions: { importProductsFile },
+  functions: { importProductsFile, importFileParser },
   package: { individually: true },
   custom: {
     esbuild: {
