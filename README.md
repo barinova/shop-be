@@ -1,4 +1,4 @@
-# shop-be
+# shop-be Task 5
 
 Shop Info Service directory includes 2 lambda methods:
 - **GET** getProductsList(https://lf379wln0g.execute-api.eu-west-1.amazonaws.com/dev/products)
