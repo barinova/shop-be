@@ -1,15 +1,23 @@
-import { PRODUCTS } from "../../mocks/products";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import { emitConnectionDelay } from "../../mocks/delayFunc";
+import { getClient } from '@functions/test/pg-client';
+import {Product} from 'models/product';
 
 const NOT_FOUND: string = 'Not Found Product With Id';
+const queryGetProductById: string = `  
+  select * from products p
+  join stocks s 
+  on p.id = s.product_id and p.id = $1;
+`;
 
 export const getProductById = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  console.log(`getProductById: path params ${event.pathParameters}, query params ${event.queryStringParameters}`);
   const id = event.pathParameters?.id;
+  const client = getClient();
 
   try {
-    await emitConnectionDelay(500);
-    const product = PRODUCTS.find(x => x.id === id);
+    await client.connect();
+    const product: Product = (await client.query(queryGetProductById, [id]))?.rows?.[0];
+    console.log(product);
 
     if (!product) {
       throw `${NOT_FOUND} ${id}`;
@@ -31,5 +39,7 @@ export const getProductById = async (event: APIGatewayProxyEvent): Promise<APIGa
         message: e
       })
     };
+  } finally {
+    client.end();
   }
 };

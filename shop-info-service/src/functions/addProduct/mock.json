@@ -1,0 +1,8 @@
+{
+  "body": {
+    "title": "Test product",
+    "description": "test description",
+    "price": 4,
+    "count": 10
+  }
+}
