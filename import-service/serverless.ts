@@ -1,6 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 import {importProductsFile} from '@functions/importProductsFile';
 import {importFileParser} from '@functions/importFileParser';
+import {catalogBatchProcess} from '@functions/catalogBatchProcess';
 
 const serverlessConfiguration: AWS = {
   service: 'import-service',
@@ -23,6 +24,15 @@ const serverlessConfiguration: AWS = {
         Effect: 'Allow',
         Action: ['s3:*'],
         Resource: ['arn:aws:s3:::product-file-store/*']
+      },
+      {
+        Effect: 'Allow',
+        Action: 'sqs:*',
+        Resource: [
+          {
+            'Fn::GetAtt': ['catalogItemsQueue', 'Arn']
+          }
+        ]
       }
     ],
     apiGateway: {
@@ -32,9 +42,12 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      IMPORT_QUEUE_URL: {
+        Ref: 'catalogItemsQueue'
+      },
     },
   },
-  functions: { importProductsFile, importFileParser },
+  functions: { importProductsFile, importFileParser, catalogBatchProcess },
   package: { individually: true },
   custom: {
     esbuild: {
@@ -47,6 +60,16 @@ const serverlessConfiguration: AWS = {
       platform: 'node',
       concurrency: 10,
     },
+  },
+  resources: {
+    Resources: {
+      catalogItemsQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'catalogItemsQueue'
+        }
+      },
+    }
   },
 };
 
