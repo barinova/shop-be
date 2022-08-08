@@ -5,6 +5,8 @@ import {S3Customizations} from 'aws-sdk/lib/services/s3';
 
 export const importFileParser = async (event: S3CreateEvent) => {
     const sqs: SQS = new AWS.SQS();
+
+    console.log('importFileParser');
     for (const record of event.Records) {
         const region = record.awsRegion;
         const s3: S3Customizations = new AWS.S3({ region });
@@ -14,6 +16,8 @@ export const importFileParser = async (event: S3CreateEvent) => {
 };
 
 const handleParse = async (s3Client, key: string, bucketName: string, sqs: SQS) => {
+
+    console.log('handleParse', key);
     const params = {
         Bucket: bucketName,
         Key: key,

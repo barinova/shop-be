@@ -33,6 +33,15 @@ const serverlessConfiguration: AWS = {
             'Fn::GetAtt': ['catalogItemsQueue', 'Arn']
           }
         ]
+      },
+      {
+        Effect: 'Allow',
+        Action: 'sns:*',
+        Resource: [
+          {
+            Ref: 'createProductTopic'
+          }
+        ]
       }
     ],
     apiGateway: {
@@ -45,6 +54,9 @@ const serverlessConfiguration: AWS = {
       IMPORT_QUEUE_URL: {
         Ref: 'catalogItemsQueue'
       },
+      SNS_TOPIC_ARN: {
+        Ref: 'createProductTopic'
+      }
     },
   },
   functions: { importProductsFile, importFileParser, catalogBatchProcess },
@@ -67,6 +79,22 @@ const serverlessConfiguration: AWS = {
         Type: 'AWS::SQS::Queue',
         Properties: {
           QueueName: 'catalogItemsQueue'
+        }
+      },
+      createProductTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'createProductTopic'
+        }
+      },
+      SNSSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Protocol: 'email',
+          Endpoint: '',
+          TopicArn: {
+            Ref: 'createProductTopic'
+          },
         }
       },
     }
