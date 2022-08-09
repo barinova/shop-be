@@ -5,7 +5,7 @@ export const catalogBatchProcess = {
     events: [
         {
             sqs: {
-                batchSize: 5,
+                batchSize: 2,
                 arn: {
                     'Fn::GetAtt': ['catalogItemsQueue', 'Arn']
                 }

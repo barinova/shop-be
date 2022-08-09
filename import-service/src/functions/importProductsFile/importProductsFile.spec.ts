@@ -1,6 +1,5 @@
 import {APIGatewayProxyResult} from 'aws-lambda';
 import {importProductsFile} from './handler';
-const AWS = require('aws-sdk');
 
 const INCORRECT_EXTESION_FILE: string = 'test-file.png'
 const CORRECT_EXTESION_FILE = 'test-file.csv';
@@ -25,6 +24,6 @@ describe('importProductsFile', () => {
         }
 
         const importResult: APIGatewayProxyResult = await importProductsFile(event);
-        expect(importResult.statusCode).toEqual(400);
+        expect(importResult.statusCode).toEqual(500);
     });
 });

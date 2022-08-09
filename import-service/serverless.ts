@@ -51,6 +51,11 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      PG_HOST: '',
+      PG_PORT: '',
+      PG_DATABASE: '',
+      PG_USERNAME: '',
+      PG_PASSWORD: '',
       IMPORT_QUEUE_URL: {
         Ref: 'catalogItemsQueue'
       },
@@ -95,6 +100,22 @@ const serverlessConfiguration: AWS = {
           TopicArn: {
             Ref: 'createProductTopic'
           },
+          FilterPolicy: {
+            messageSize: ['Single']
+          }
+        }
+      },
+      SNSMultSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Protocol: 'email',
+          Endpoint: '',
+          TopicArn: {
+            Ref: 'createProductTopic'
+          },
+          FilterPolicy: {
+            messageSize: ['Multiple']
+          }
         }
       },
     }
