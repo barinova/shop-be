@@ -7,7 +7,7 @@ export const importProductsFile = {
       http: {
         method: 'get',
         path: 'import',
-        cors: true
+        cors: true,
       },
     },
   ],
