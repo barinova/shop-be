@@ -30,10 +30,15 @@ export const addProduct = async (event: APIGatewayProxyEvent): Promise<APIGatewa
     console.log(`getProductById: path params ${event.pathParameters}, query params ${event.queryStringParameters}, body ${JSON.stringify(event.body)}`);
 
     const product: NewProduct = typeof event.body === 'string' ? JSON.parse(event.body) : event.body;
+    return await createProduct(product);
 
+}
+
+export const createProduct = async (product: NewProduct): Promise<APIGatewayProxyResult> => {
     const error: string = validateProduct(product);
 
     if (error) {
+        console.log('Validate product error:', error);
         return {
             statusCode: 400,
             body: JSON.stringify({
@@ -45,6 +50,7 @@ export const addProduct = async (event: APIGatewayProxyEvent): Promise<APIGatewa
     const client = getClient();
 
     try {
+        console.log('Add product to db:', product);
         await client.connect();
 
         await client.query('BEGIN');
