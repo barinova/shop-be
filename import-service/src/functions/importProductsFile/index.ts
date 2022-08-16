@@ -8,6 +8,13 @@ export const importProductsFile = {
         method: 'get',
         path: 'import',
         cors: true,
+        authorizer: {
+          name: 'basicAuthorizer',
+          arn: 'arn:aws:lambda:eu-west-1:812253047139:function:authorization-service-dev-basicAuthorizer',
+          identitySource: 'method.request.header.Authorization',
+          resultTtlInSeconds: 0,
+          type: 'token'
+        }
       },
     },
   ],
