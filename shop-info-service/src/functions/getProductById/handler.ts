@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import { getClient } from '@functions/test/pg-client';
+import {getClient} from '../test/pg-client';
 import {Product} from 'models/product';
 
 const NOT_FOUND: string = 'Not Found Product With Id';

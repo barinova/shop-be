@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult } from "aws-lambda";
-import {getClient} from '@functions/test/pg-client';
+import {getClient} from '../test/pg-client';
 import {Product} from 'models/product';
 
 const queryProductsList = `select * from products;`;

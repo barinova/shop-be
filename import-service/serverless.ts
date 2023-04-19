@@ -96,7 +96,7 @@ const serverlessConfiguration: AWS = {
         Type: 'AWS::SNS::Subscription',
         Properties: {
           Protocol: 'email',
-          Endpoint: '',
+          Endpoint: 'test1@eeemail.com',
           TopicArn: {
             Ref: 'createProductTopic'
           },
@@ -109,7 +109,7 @@ const serverlessConfiguration: AWS = {
         Type: 'AWS::SNS::Subscription',
         Properties: {
           Protocol: 'email',
-          Endpoint: '',
+          Endpoint: 'test2@eeemail.com',
           TopicArn: {
             Ref: 'createProductTopic'
           },
@@ -118,6 +118,19 @@ const serverlessConfiguration: AWS = {
           }
         }
       },
+      GatewayResponseDefault4XX: {
+        Type: 'AWS::ApiGateway::GatewayResponse',
+        Properties: {
+          ResponseParameters: {
+            'gatewayresponse.header.Access-Control-Allow-Origin': "'*'",
+            'gatewayresponse.header.Access-Control-Allow-Headers': "'*'"
+          },
+          ResponseType: 'DEFAULT_4XX',
+          RestApiId: {
+            Ref: "ApiGatewayRestApi",
+          }
+        }
+      }
     }
   },
 };

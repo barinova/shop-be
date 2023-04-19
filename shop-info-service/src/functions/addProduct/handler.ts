@@ -1,6 +1,6 @@
 import {APIGatewayProxyEvent, APIGatewayProxyResult} from 'aws-lambda';
 import {NewProduct, Product} from 'models/product';
-import {getClient} from '@functions/test/pg-client';
+import {getClient} from '../test/pg-client';
 import {Stock} from 'models/stock';
 
 const queryAddProduct: string = `  
